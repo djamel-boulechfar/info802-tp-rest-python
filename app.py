@@ -11,9 +11,12 @@ port = int(os.environ.get('PORT', 5000))
 
 class CalculeTempsParcours(Resource):
     def get(self, distance, autonomie, temps_chargement, vitesse_moyenne):
-        nb_recharges_requises = distance // autonomie;
-        if distance % autonomie != 0:
-            nb_recharges_requises += 1
+        if distance < autonomie:
+            nb_recharges_requises = 0
+        else:
+            nb_recharges_requises = distance // autonomie;
+            if distance % autonomie != 0:
+                nb_recharges_requises += 1
         resultat = distance / vitesse_moyenne * 60 + nb_recharges_requises * temps_chargement
         return {'tempsParcours': resultat}
 
