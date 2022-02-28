@@ -19,7 +19,19 @@ class CalculeTempsParcours(Resource):
         return {'tempsParcours': resultat}
 
 
+class CalculeTempsParcoursAvecMaps(Resource):
+    def get(self, distance, autonomie, temps_chargement, duree_trajet):
+        if distance < autonomie:
+            nb_recharges_requises = 0
+        else:
+            nb_recharges_requises = distance // autonomie
+        resultat = duree_trajet + nb_recharges_requises * temps_chargement * 60
+        return {'tempsParcours': resultat,
+                'tempsChargement': temps_chargement,
+                'nbRecharges': nb_recharges_requises}
+
 api.add_resource(CalculeTempsParcours, '/calculeTempsParcours/<int:distance>/<int:autonomie>/<int:temps_chargement>/<int:vitesse_moyenne>')
+api.add_resource(CalculeTempsParcoursAvecMaps, '/calculeTempsParcoursAvecMaps/<int:distance>/<int:autonomie>/<int:temps_chargement>/<int:duree_trajet>')
 
 if __name__ == '__main__':
     # Local test
