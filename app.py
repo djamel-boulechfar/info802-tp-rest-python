@@ -15,8 +15,6 @@ class CalculeTempsParcours(Resource):
             nb_recharges_requises = 0
         else:
             nb_recharges_requises = distance // autonomie;
-            if distance % autonomie != 0:
-                nb_recharges_requises += 1
         resultat = distance / vitesse_moyenne * 60 + nb_recharges_requises * temps_chargement
         return {'tempsParcours': resultat}
 
